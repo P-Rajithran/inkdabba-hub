@@ -76,7 +76,7 @@ export const LoginPage: React.FC = () => {
           Sign in to inkdabba-hub
         </h2>
         <p className="mt-1 text-center text-xs text-[#6B6862]">
-          Operations management and print press studio workflow
+          Digital Marketing & Dev Agency Studio Operations
         </p>
       </div>
 

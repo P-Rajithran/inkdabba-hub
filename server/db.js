@@ -7,7 +7,7 @@ dotenv.config()
 // Ensure robust SRV DNS resolution for Atlas clusters on Windows and cloud environments
 try {
   dns.setServers(['8.8.8.8', '1.1.1.1'])
-} catch (e) {
+} catch {
   // Use system default if setServers is unavailable
 }
 
