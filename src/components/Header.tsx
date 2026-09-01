@@ -15,31 +15,31 @@ interface HeaderProps {
 const VIEW_TITLES: Record<NavItemId, { title: string; subtitle: string }> = {
   today: {
     title: 'Today',
-    subtitle: 'Daily priorities, active jobs, and shift schedule',
+    subtitle: 'Daily operational priorities, active deliverables, and shift logs',
   },
   dashboard: {
     title: 'Dashboard',
-    subtitle: 'High-level operational metrics and press performance',
+    subtitle: 'Executive agency intelligence, department pipelines, and client accounts',
   },
   'my-tasks': {
     title: 'My Tasks',
-    subtitle: 'Your pending assignments and quality checks',
+    subtitle: 'Your personal deliverables queue and stage reviews',
   },
   'team-view': {
     title: 'Team View',
-    subtitle: 'Press operators, designers, and workload distribution',
+    subtitle: 'Agency specialists, leave calendar, and workload capacity balance',
   },
   spotlight: {
     title: 'Spotlight & Leaderboard',
-    subtitle: 'Top operator achievements, output milestones, and shift rankings',
+    subtitle: 'Top specialist output milestones and studio rankings',
   },
   'completed-tasks': {
     title: 'Completed Tasks',
-    subtitle: 'Archive of finished print runs, proofs, and deliveries',
+    subtitle: 'Archive of delivered campaigns, deployed features, and signed-off assets',
   },
   'tv-mode': {
     title: 'TV Mode',
-    subtitle: 'High-visibility live monitor for studio screens',
+    subtitle: 'High-visibility broadcast monitor for office screens',
   },
 }
 

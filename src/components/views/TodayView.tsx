@@ -27,8 +27,8 @@ interface TodayViewProps {
 export const TodayView: React.FC<TodayViewProps> = ({
   tasks,
   currentUser,
-  teamMembers,
-  onSelectUser,
+  teamMembers: _teamMembers,
+  onSelectUser: _onSelectUser,
   onToggleTask,
   onUpdateStatus,
   onNewTaskClick,
@@ -158,29 +158,21 @@ export const TodayView: React.FC<TodayViewProps> = ({
             </p>
           </div>
 
-          {/* User Switcher Dropdown */}
-          <div className="flex items-center gap-3 self-start md:self-center bg-[#F7F5F1] p-3 rounded-2xl border border-[#E8E5DD]">
-            <div className="w-9 h-9 rounded-xl bg-[#2B4C7E] text-white flex items-center justify-center font-bold text-sm">
-              {currentUser.avatarInitial || currentUser.name.charAt(0)}
-            </div>
-            <div className="flex flex-col">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-[#57534E]">
-                Viewing as:
-              </label>
-              <select
-                value={currentUser.id}
-                onChange={(e) => {
-                  const selected = teamMembers.find((m) => m.id === e.target.value)
-                  if (selected) onSelectUser(selected)
-                }}
-                className="bg-transparent text-xs font-semibold text-[#1A1A1A] focus:outline-hidden cursor-pointer"
-              >
-                {teamMembers.map((m) => (
-                  <option key={m.id} value={m.id}>
-                    {m.name} ({m.role.split(' ')[0]})
-                  </option>
-                ))}
-              </select>
+          {/* Today's Team Pulse */}
+          <div className="flex flex-col gap-2 self-start md:self-center bg-[#F7F5F1] p-3.5 rounded-2xl border border-[#E8E5DD]">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#57534E]">
+              Today's Team Attendance
+            </span>
+            <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-[#1A1A1A]">
+              <span className="flex items-center gap-1 text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-lg">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 6 Active
+              </span>
+              <span className="flex items-center gap-1 text-indigo-800 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-lg">
+                🌓 Ritika (½ Day)
+              </span>
+              <span className="flex items-center gap-1 text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-lg">
+                🌙 Karthik (Away)
+              </span>
             </div>
           </div>
         </div>
@@ -404,7 +396,7 @@ export const TodayView: React.FC<TodayViewProps> = ({
               <div className="relative">
                 <textarea
                   rows={3}
-                  placeholder="Record note (e.g. Heidelberg blanket cleaned; batch #804 signed off; paper shipment arrived)..."
+                  placeholder="Record shift note (e.g. Meta Ads ROAS verified 4.2x; React dashboard API integrated; Figma UI review completed)..."
                   value={logInput}
                   onChange={(e) => setLogInput(e.target.value)}
                   className="w-full p-3 bg-[#F7F5F1] border border-[#E8E5DD] rounded-xl text-xs text-[#1A1A1A] placeholder-[#8C827A] focus:outline-hidden focus:border-[#2B4C7E] focus:bg-white resize-none"

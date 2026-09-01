@@ -3,7 +3,8 @@ import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { Sidebar } from './components/Sidebar'
 import { Header } from './components/Header'
-import { DashboardPageView } from './components/views/DashboardPageView'
+import { TodayView } from './components/views/TodayView'
+import { DashboardView } from './components/views/DashboardView'
 import { MyTasksView } from './components/views/MyTasksView'
 import { TeamView } from './components/views/TeamView'
 import { CompletedTasksView } from './components/views/CompletedTasksView'
@@ -15,7 +16,7 @@ import { RegisterPage } from './components/auth/RegisterPage'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { useAuth } from './context/useAuth'
 import type { NavItemId, Task, TaskStatus, TeamMember, BackendTask, BackendUser } from './types'
-import { INITIAL_TASKS, TEAM_MEMBERS } from './data/mockData'
+import { INITIAL_TASKS, TEAM_MEMBERS, DASHBOARD_METRICS } from './data/mockData'
 import {
   fetchTasksFromApi,
   fetchUsersFromApi,
@@ -297,9 +298,27 @@ function DashboardLayout({ initialView = 'today' }: DashboardLayoutProps = {}) {
         />
 
         <main className="flex-1 px-6 lg:px-12 py-6 lg:py-8 max-w-7xl w-full mx-auto pb-12">
-          {/* Main Unified Dashboard Page (Greeting, Logout, 4 Stats, Quick-Add, Task List, Admin Toggle) */}
-          {(currentView === 'dashboard' || currentView === 'today') && (
-            <DashboardPageView />
+          {/* Today View (Personal Shift Run Sheet, Today's Focus, Team Attendance & Daily Log) */}
+          {currentView === 'today' && (
+            <TodayView
+              tasks={tasks}
+              currentUser={currentUser}
+              teamMembers={teamMembers}
+              onSelectUser={setCurrentUser}
+              onToggleTask={handleToggleTask}
+              onUpdateStatus={handleUpdateStatus}
+              onNewTaskClick={() => setCurrentView('my-tasks')}
+            />
+          )}
+
+          {/* Executive Agency Operations Dashboard (KPIs, 4 Department Pipelines, Client Accounts, Workload Radar) */}
+          {currentView === 'dashboard' && (
+            <DashboardView
+              metrics={DASHBOARD_METRICS}
+              teamMembers={teamMembers}
+              tasks={tasks}
+              onNavigateToTasks={() => setCurrentView('my-tasks')}
+            />
           )}
 
           {/* My Tasks View */}
