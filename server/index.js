@@ -8,6 +8,8 @@ import userRoutes from './routes/userRoutes.js'
 import leaderboardRoutes from './routes/leaderboardRoutes.js'
 import leaveRoutes from './routes/leaveRoutes.js'
 import clientRoutes from './routes/clientRoutes.js'
+import { User } from './models/User.js'
+import { seedDatabase } from './seed.js'
 
 dotenv.config()
 
@@ -61,6 +63,17 @@ app.use((err, req, res, _next) => {
 // Start server
 async function startServer() {
   await connectDB()
+
+  try {
+    const userCount = await User.countDocuments()
+    if (userCount === 0) {
+      console.log('⚡ [Server] Fresh database detected. Auto-seeding initial agency users & tasks...')
+      await seedDatabase(false)
+    }
+  } catch (err) {
+    console.warn('[Server] Auto-seed check skipped:', err.message)
+  }
+
   app.listen(PORT, () => {
     console.log(`🚀 [Server] inkdabba-hub API listening on http://localhost:${PORT}`)
   })

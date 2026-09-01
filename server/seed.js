@@ -8,7 +8,7 @@ import { Client } from './models/Client.js'
 
 dotenv.config()
 
-async function seed() {
+export async function seedDatabase(shouldExit = false) {
   try {
     console.log('🌱 [Seed] Connecting to database...')
     await connectDB()
@@ -518,11 +518,18 @@ async function seed() {
     console.log(`  • Karthik (Full Day - grayscale + pulsing away badge)`)
 
     console.log('\n✨ Database seeding completed successfully!')
-    process.exit(0)
+    if (shouldExit) {
+      process.exit(0)
+    }
   } catch (error) {
     console.error('❌ [Seed] Error during seeding:', error)
-    process.exit(1)
+    if (shouldExit) {
+      process.exit(1)
+    }
   }
 }
 
-seed()
+// If run directly from CLI (e.g. npm run seed)
+if (process.argv[1] && process.argv[1].replace(/\\/g, '/').endsWith('server/seed.js')) {
+  seedDatabase(true)
+}
