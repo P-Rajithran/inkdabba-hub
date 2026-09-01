@@ -39,15 +39,24 @@ function DashboardLayout({ initialView = 'today' }: DashboardLayoutProps = {}) {
   const [tasks, setTasks] = useState<Task[]>(INITIAL_TASKS)
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>(TEAM_MEMBERS)
   const [currentUser, setCurrentUser] = useState<TeamMember>(() => {
+    if (authUser) {
+      const match = TEAM_MEMBERS.find(
+        (m) =>
+          m.id === authUser.id ||
+          (Boolean(m.email) && Boolean(authUser.email) && m.email?.toLowerCase() === authUser.email?.toLowerCase()) ||
+          (Boolean(authUser.name) && m.name.toLowerCase() === authUser.name?.toLowerCase())
+      )
+      if (match) return match
+    }
     return {
-      id: authUser?.id || TEAM_MEMBERS[0].id,
-      name: authUser?.name || 'Rajithran',
-      role: authUser?.role === 'admin' ? 'Admin' : 'Operator',
-      email: authUser?.email || 'operator@inkdabba.com',
+      id: authUser?.id || TEAM_MEMBERS[1].id,
+      name: authUser?.name || 'Aswin',
+      role: authUser?.role === 'admin' ? 'Admin' : 'Member',
+      email: authUser?.email || 'aswin@inkdabba.com',
       status: 'active',
       tasksCount: 0,
-      capacity: 65,
-      avatarInitial: (authUser?.name || 'R').charAt(0).toUpperCase(),
+      capacity: 75,
+      avatarInitial: (authUser?.name || 'A').charAt(0).toUpperCase(),
     }
   })
   const [isDbConnected, setIsDbConnected] = useState<boolean>(false)
@@ -104,8 +113,13 @@ function DashboardLayout({ initialView = 'today' }: DashboardLayoutProps = {}) {
           setIsDbConnected(true)
 
           // Match logged-in user in roster
-          if (authUser?.id) {
-            const matched = mappedUsers.find((u) => u.id === authUser.id)
+          if (authUser) {
+            const matched = mappedUsers.find(
+              (u) =>
+                u.id === authUser.id ||
+                Boolean(u.email && authUser.email && u.email.toLowerCase() === authUser.email.toLowerCase()) ||
+                Boolean(authUser.name && u.name.toLowerCase() === authUser.name.toLowerCase())
+            )
             if (matched) {
               setCurrentUser(matched)
             }
@@ -327,7 +341,7 @@ function DashboardLayout({ initialView = 'today' }: DashboardLayoutProps = {}) {
  * Root Application Router with Route Protection
  */
 export function App() {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, currentUser: authUser } = useAuth()
   const navigate = useNavigate()
 
   // Splash screen state: shown once on initial app load (or on first login)
@@ -382,7 +396,7 @@ export function App() {
         path="/dashboard"
         element={
           <ProtectedRoute>
-            <DashboardLayout key="today" initialView="today" />
+            <DashboardLayout key={authUser?.id || 'today'} initialView="today" />
           </ProtectedRoute>
         }
       />

@@ -48,7 +48,7 @@ async function ensureAuthenticated(): Promise<string | null> {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        email: 'rajithran@inkdabba.com',
+        email: 'prakash@inkdabba.com',
         password: 'password123',
       }),
     })

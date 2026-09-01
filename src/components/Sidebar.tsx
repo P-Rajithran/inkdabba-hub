@@ -190,14 +190,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <div className="flex items-center justify-between gap-3 px-1">
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-9 h-9 rounded-full bg-[#E8E5DD] text-[#2B4C7E] flex items-center justify-center font-bold text-sm ring-2 ring-white shrink-0">
-                {currentUser ? (currentUser.avatarInitial || currentUser.name.charAt(0)) : 'R'}
+                {currentUser?.avatarInitial || currentUser?.name?.charAt(0) || 'A'}
               </div>
               <div className="flex flex-col min-w-0">
                 <span className="text-sm font-semibold text-[#1A1A1A] truncate leading-tight">
-                  {currentUser ? currentUser.name : 'Rajithran'}
+                  {currentUser?.name || 'Aswin'}
                 </span>
                 <span className="text-xs text-[#6B6862] truncate leading-tight mt-0.5 capitalize">
-                  {currentUser ? currentUser.role : 'Lead Operations'}
+                  {currentUser?.role || 'Member'}
                 </span>
               </div>
             </div>
